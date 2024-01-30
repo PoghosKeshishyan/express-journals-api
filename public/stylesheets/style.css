@@ -7,8 +7,11 @@ body {
   width: 800px;
 }
 
-.content h1 {
+.content {
   margin-left: 20px;
-  font-size: 25px;
-  color: #00AEEF;
+  color: #551A8B;
+}
+
+.content h1 a {
+  color: #0000EE
 }
