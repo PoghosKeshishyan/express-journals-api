@@ -39,8 +39,11 @@ const contact = async (req, res) => {
             message: 'Շնորհակալություն հաղորդագրության համար'
         });
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: 'Произошла ошибка при отправке письма' });
+        res.status(500).json({
+            error,
+            success: false,
+            message: 'An error occurred while sending the email',
+        });
     }
 };
 
