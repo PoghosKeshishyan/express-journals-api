@@ -1,7 +1,7 @@
 const Year = require('../models/Year');
 
-// get all years
-const all = async(req, res) => {
+// Retrieve all available years
+const all = async (req, res) => {
     try {
         const years = await Year.find();
 
@@ -20,8 +20,8 @@ const all = async(req, res) => {
     }
 }
 
-// get one year
-const year = async(req, res) => {
+// Retrieve data for a specific year
+const year = async (req, res) => {
     try {
         const { year } = req.params;
         const foundYear = await Year.find({ year });
@@ -41,8 +41,8 @@ const year = async(req, res) => {
     }
 };
 
-// add new year
-const add = async(req, res) => {
+// Add a new year to the database
+const add = async (req, res) => {
     try {
         const { year } = req.params;
         const newYear = new Year({ year });
@@ -60,14 +60,18 @@ const add = async(req, res) => {
     }
 }
 
-// edit year
-const edit = async(req, res) => {
+// Edit data for a specific year
+const edit = async (req, res) => {
     try {
         const { year } = req.params;
         const data = req.body;
         const options = { new: true, runValidators: true };
 
-        const updatedYear = await Year.findOneAndUpdate({ year }, { $set: data }, options);
+        const updatedYear = await Year.findOneAndUpdate(
+            { year }, 
+            { $set: data }, 
+            options
+        );
 
         if (updatedYear) {
             res.status(200).json({
@@ -87,8 +91,8 @@ const edit = async(req, res) => {
     }
 };
 
-// remove year
-const remove = async(req, res) => {
+// Remove data for a specific year
+const remove = async (req, res) => {
     try {
         const { year } = req.params;
         const deletedYear = await Year.findOneAndDelete({ year });

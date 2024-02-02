@@ -1,7 +1,7 @@
 const Journal = require('../models/Journal');
 
-// get all journals
-const all = async(req, res) => {
+// Retrieve all journals
+const all = async (req, res) => {
     try {
         const journals = await Journal.find();
 
@@ -20,8 +20,29 @@ const all = async(req, res) => {
     }
 }
 
-// get journals by year
-const byYear = async(req, res) => {
+// Retrieve a journal entry by ID
+const jorunal = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const journal = await Journal.findById({ _id: id });
+
+        if (journal?._id) {
+            res.status(200).json(journal);
+        } else {
+            res.status(404).json({
+                message: 'No journal data found',
+            });
+        }
+    } catch (error) {
+        res.status(400).json({
+            message: 'Failed to retrieve journal data',
+            error: error.message,
+        });
+    }
+}
+
+// Retrieve journals for a specific year
+const byYear = async (req, res) => {
     try {
         const { year } = req.params;
         const journals = await Journal.find({ year });
@@ -41,8 +62,8 @@ const byYear = async(req, res) => {
     }
 }
 
-// get the last three journals
-const current = async(req, res) => {
+// Retrieve the last three journals
+const lastThree = async (req, res) => {
     try {
         const lastThreeJournals = (await Journal.find().sort({ _id: -1 }).limit(3)).reverse();
 
@@ -61,8 +82,8 @@ const current = async(req, res) => {
     }
 }
 
-// add new journals
-const add = async(req, res) => {
+// Add a new journal entry
+const add = async (req, res) => {
     try {
         const { year, title, content, url, img, disabled } = req.body;
 
@@ -84,8 +105,8 @@ const add = async(req, res) => {
     }
 }
 
-// edit one journal
-const edit = async(req, res) => {
+// Edit an existing journal entry
+const edit = async (req, res) => {
     try {
         const { id } = req.params;
         const data = req.body;
@@ -111,8 +132,8 @@ const edit = async(req, res) => {
     }
 }
 
-// remove journal
-const remove = async(req, res) => {
+// Remove a journal entry
+const remove = async (req, res) => {
     try {
         const id = req.params.id;
         const deletedJournal = await Journal.findOneAndDelete({ _id: id });
@@ -135,4 +156,4 @@ const remove = async(req, res) => {
     }
 }
 
-module.exports = { all, byYear, current, add, edit, remove };
+module.exports = { all, jorunal, byYear, lastThree, add, edit, remove };
