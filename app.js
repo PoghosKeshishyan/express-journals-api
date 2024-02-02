@@ -7,7 +7,7 @@ require('dotenv').config();
 const app = express();
 
 const corsOptions = {
-    origin: 'https://barilur.org',
+    origin: 'http://barilur.org',
     optionsSuccessStatus: 200, 
 };
 
