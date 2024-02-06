@@ -5,7 +5,6 @@ const { auth } = require('../middleware/auth');
 const { register, login, current } = require('../controllers/users');
 
 const registerValid = [
-    body('name').notEmpty(),
     body('login').notEmpty(),
     body('password').isLength({ min: 6 }),
 ];
