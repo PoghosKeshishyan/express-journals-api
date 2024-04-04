@@ -65,7 +65,11 @@ const byYear = async (req, res) => {
 // Retrieve the last three journals
 const lastThree = async (req, res) => {
     try {
-        const lastThreeJournals = (await Journal.find().sort({ _id: -1 }).limit(3)).reverse();
+        const lastThreeJournals = (
+            await Journal.find({ disabled: true })
+                .sort({ _id: -1 })
+                .limit(3)
+            ).reverse();
 
         if (lastThreeJournals.length) {
             res.status(200).json(lastThreeJournals);
